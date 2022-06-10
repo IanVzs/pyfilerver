@@ -57,7 +57,7 @@ def test(
     ServerClass=ThreadingHTTPServer,
     protocol="HTTP/1.0",
     port=8000,
-    bind=None
+    bind=None,
 ):
     """test the HTTP request handler class.
 
@@ -72,7 +72,7 @@ def run(
     ServerClass=ThreadingHTTPServer,
     protocol="HTTP/1.0",
     port=8000,
-    bind=None
+    bind=None,
 ):
     """run the HTTP request handler class.
 
@@ -290,7 +290,6 @@ def main():
             self.RequestHandlerClass(
                 request, client_address, self, directory=args.directory
             )
-
 
     run(
         HandlerClass=handler_class,
