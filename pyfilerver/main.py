@@ -3,18 +3,23 @@ http.server plus
 
 add uploadfile
 """
-import os
-import io
-import re
-import sys
 import html
+import io
+import os
+import re
 import shutil
-import urllib
-import socket
 import signal
-
+import socket
+import sys
+import urllib
 from http import HTTPStatus
-from http.server import SimpleHTTPRequestHandler, BaseHTTPRequestHandler, ThreadingHTTPServer, CGIHTTPRequestHandler
+from http.server import (
+    BaseHTTPRequestHandler,
+    CGIHTTPRequestHandler,
+    SimpleHTTPRequestHandler,
+    ThreadingHTTPServer,
+)
+
 
 def _get_best_family(*address):
     infos = socket.getaddrinfo(
@@ -25,24 +30,26 @@ def _get_best_family(*address):
     family, type, proto, canonname, sockaddr = next(iter(infos))
     return family, sockaddr
 
+
 def set_timeout(timeout):
     def wrap(func):
-        def time_out_handle(signum, frame): # 收到信号 SIGALRM 后的回调函数，第一个参数是信号的数字，第二个参数是the interrupted stack frame.
+        def time_out_handle(signum, frame):
             raise RuntimeError
-    
+
         def to_do(*args, **kwargs):
             try:
-                signal.signal(signal.SIGALRM, time_out_handle) # 设置信号和回调函数
-                signal.alarm(timeout) # 设置 timeout 
+                signal.signal(signal.SIGALRM, time_out_handle)  # 设置信号和回调函数
+                signal.alarm(timeout)  # 设置 timeout
                 print('start alarm signal.')
                 r = func(*args, **kwargs)
                 print('close alarm signal.')
-                signal.alarm(0) # 正常处理则关闭
+                signal.alarm(0)  # 正常处理则关闭
                 return r
-            except RuntimeError as e:
+            except RuntimeError:
                 pass
         return to_do
     return wrap
+
 
 @set_timeout(1)
 def test(HandlerClass=BaseHTTPRequestHandler,
@@ -55,9 +62,10 @@ def test(HandlerClass=BaseHTTPRequestHandler,
     """
     run()
 
+
 def run(HandlerClass=BaseHTTPRequestHandler,
-         ServerClass=ThreadingHTTPServer,
-         protocol="HTTP/1.0", port=8000, bind=None):
+        ServerClass=ThreadingHTTPServer,
+        protocol="HTTP/1.0", port=8000, bind=None):
     """run the HTTP request handler class.
 
     This runs an HTTP server on port 8000 (or the port argument).
@@ -82,7 +90,7 @@ def run(HandlerClass=BaseHTTPRequestHandler,
 class SimpleHTTPRequestHandlerPlus(SimpleHTTPRequestHandler):
     def __init__(self, *a, **k) -> None:
         super().__init__(*a, **k)
-    
+
     def list_directory(self, path):
         """Helper to produce a directory listing (absent index.html).
 
@@ -116,13 +124,13 @@ class SimpleHTTPRequestHandlerPlus(SimpleHTTPRequestHandler):
         r.append('<title>%s</title>\n</head>' % title)
         r.append('<body>\n<h1>%s</h1>' % title)
         r.append('<hr>\n<ul>')
-        
+
         r.append("<hr>\n")
         r.append("<form ENCTYPE=\"multipart/form-data\" method=\"post\">")
         r.append("<input name=\"file\" type=\"file\"/>")
         r.append("<input type=\"submit\" value=\"upload\"/></form>\n")
         r.append("<hr>\n<ul>\n")
-        
+
         for name in list:
             fullname = os.path.join(path, name)
             displayname = linkname = name
@@ -133,10 +141,10 @@ class SimpleHTTPRequestHandlerPlus(SimpleHTTPRequestHandler):
             if os.path.islink(fullname):
                 displayname = name + "@"
                 # Note: a link to a directory displays with @ and links with /
-            r.append('<li><a href="%s">%s</a></li>'
-                    % (urllib.parse.quote(linkname,
-                                          errors='surrogatepass'),
-                       html.escape(displayname, quote=False)))
+            r.append(
+                '<li><a href="%s">%s</a></li>'
+                % (urllib.parse.quote(linkname, errors='surrogatepass'),
+                    html.escape(displayname, quote=False)))
         r.append('</ul>\n<hr>\n</body>\n</html>\n')
         encoded = '\n'.join(r).encode(enc, 'surrogateescape')
         f = io.BytesIO()
@@ -200,7 +208,7 @@ class SimpleHTTPRequestHandlerPlus(SimpleHTTPRequestHandler):
                 h = ''.join(h[:-1]) + '_'
                 fn = '.'.join([h, t])
             else:
-                fn += "_"            
+                fn += "_"
         line = self.rfile.readline()
         remain_bytes -= len(line)
         line = self.rfile.readline()
@@ -226,6 +234,7 @@ class SimpleHTTPRequestHandlerPlus(SimpleHTTPRequestHandler):
                 out.write(pre_line)
                 pre_line = line
         return False, "Unexpect Ends of data."
+
 
 def main():
     import argparse
@@ -269,6 +278,7 @@ def main():
         port=args.port,
         bind=args.bind,
     )
+
 
 if __name__ == '__main__':
     main()
