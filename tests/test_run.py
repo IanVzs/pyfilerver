@@ -2,6 +2,7 @@
 测试是否可以运行
 """
 import signal
+import platform
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 import pyfilerver
@@ -14,6 +15,9 @@ def set_timeout(timeout):
             raise RuntimeError
 
         def to_do(*args, **kwargs):
+            if platform.system() == "Windows":
+                # Windows not signal.SIGALRM so pass
+                return None
             try:
                 signal.signal(signal.SIGALRM, time_out_handle)  # 设置信号和回调函数
                 signal.alarm(timeout)  # 设置 timeout
