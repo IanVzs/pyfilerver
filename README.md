@@ -26,7 +26,7 @@ pyfilerver
 ## Use
 When the program is running, use the web browser to access `http://127.0.0.1:8000/`. You can see
 
-![demo png](./demo.png)
+![demo png](https://github.com/IanVzs/pyfilerver/blob/main/demo.png)
 
 ### Custom Port
 ```
