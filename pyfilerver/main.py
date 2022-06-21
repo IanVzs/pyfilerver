@@ -32,11 +32,11 @@ def _get_best_family(*address):
 
 
 def run(
-    HandlerClass=BaseHTTPRequestHandler,
-    ServerClass=ThreadingHTTPServer,
-    protocol="HTTP/1.0",
-    port=8000,
-    bind=None,
+        HandlerClass=BaseHTTPRequestHandler,
+        ServerClass=ThreadingHTTPServer,
+        protocol="HTTP/1.0",
+        port=8000,
+        bind=None,
 ):
     """run the HTTP request handler class.
 
@@ -111,12 +111,11 @@ class SimpleHTTPRequestHandlerPlus(SimpleHTTPRequestHandler):
                 displayname = name + "@"
                 # Note: a link to a directory displays with @ and links with /
             r.append(
-                '<li style="text-align:right"><a href="{}" style="float:left">{}</a><div style="float:right; padding-right:50%">{}&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;{}</div></li>'
-                .format(
+                '<li style="text-align:right"><a href="{}" style="float:left">{}</a><div style="float:right; padding-right:50%">{}&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;{}</div></li>'.format(
                     urllib.parse.quote(linkname, errors="surrogatepass"),
                     html.escape(displayname, quote=False),
                     datetime.datetime.fromtimestamp(os.path.getmtime(fullname)),
-                    sys.getsizeof(fullname)
+                    sys.getsizeof(fullname),
                 )
             )
         r.append("</ul>\n<hr>\n</body>\n</html>\n")
