@@ -32,11 +32,11 @@ def _get_best_family(*address):
 
 
 def run(
-        HandlerClass=BaseHTTPRequestHandler,
-        ServerClass=ThreadingHTTPServer,
-        protocol="HTTP/1.0",
-        port=8000,
-        bind=None,
+    HandlerClass=BaseHTTPRequestHandler,
+    ServerClass=ThreadingHTTPServer,
+    protocol="HTTP/1.0",
+    port=8000,
+    bind=None,
 ):
     """run the HTTP request handler class.
 
