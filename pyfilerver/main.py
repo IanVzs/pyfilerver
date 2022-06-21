@@ -3,6 +3,7 @@ http.server plus
 
 add uploadfile
 """
+import datetime
 import html
 import io
 import os
@@ -110,10 +111,12 @@ class SimpleHTTPRequestHandlerPlus(SimpleHTTPRequestHandler):
                 displayname = name + "@"
                 # Note: a link to a directory displays with @ and links with /
             r.append(
-                '<li><a href="%s">%s</a></li>'
-                % (
+                '<li style="text-align:right"><a href="{}" style="float:left">{}</a><div style="float:right; padding-right:50%">{}&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;{}</div></li>'
+                .format(
                     urllib.parse.quote(linkname, errors="surrogatepass"),
                     html.escape(displayname, quote=False),
+                    datetime.datetime.fromtimestamp(os.path.getmtime(fullname)),
+                    sys.getsizeof(fullname)
                 )
             )
         r.append("</ul>\n<hr>\n</body>\n</html>\n")
