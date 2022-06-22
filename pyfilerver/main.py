@@ -143,7 +143,7 @@ class SimpleHTTPRequestHandlerPlus(SimpleHTTPRequestHandler):
         else:
             r.append("<strong>Failed:</strong>")
         r.append(info)
-        r.append('<br><a href="%s">back</a>' % self.headers["referer"].encode("utf-8"))
+        r.append('<br><a href="%s">back</a>' % self.headers["referer"])
         r.append("here</a>.</small></body>\n</html>\n")
         enc = sys.getfilesystemencoding()
         encoded = "\n".join(r).encode(enc, "surrogateescape")
