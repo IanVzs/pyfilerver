@@ -1,4 +1,20 @@
 # pyfilerver
+<p>
+    <a href="https://pypi.org/project/pyfilerver/" target="_blank">
+        <img src="https://img.shields.io/pypi/v/pyfilerver" />
+    </a>
+    <a href="https://github.com/IanVzs/pyfilerver/blob/main/.github/workflows/ci.yml" target="_blank">
+        <img src="https://img.shields.io/github/workflow/status/ianvzs/pyfilerver/CI" />
+    </a>
+    <a href="https://app.codecov.io/gh/ianvzs/pyfilerver" target="_blank">
+        <img src="https://img.shields.io/codecov/c/github/ianvzs/pyfilerver" />
+    </a>
+    <img src="https://img.shields.io/github/license/ianvzs/pyfilerver" />
+    <a href="https://pepy.tech/project/pyfilerver" target="_blank">
+        <img src="https://pepy.tech/badge/pyfilerver" />
+    </a>
+</p>
+
 python http file server
 
 ## Install & Run

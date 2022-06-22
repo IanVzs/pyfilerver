@@ -2,7 +2,7 @@
 name = "pyfilerver"
 version = "0.0.5"
 description = "Python Http File Server: Added file upload function to `http.server`"
-authors = ["ianvzs <ianvzs@outlook.com>"]
+authors = ["ianvzs <ianvzs@outlook.com>", "saint <ysudqfs@163.com>"]
 readme = "README.md"
 repository = "https://github.com/IanVzs/pyfilerver"
 license = "MIT"
